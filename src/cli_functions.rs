@@ -240,3 +240,23 @@ pub fn delete_note(note_name: String) {
         log(format!("Note file does not exist: {:?}", file_name));
     }
 }
+
+
+/// It takes a string and returns a TagEnum
+/// 
+/// Arguments:
+/// 
+/// * `args`: String - The string that is passed in from the command line.
+/// 
+/// Returns:
+/// 
+/// A TagEnum
+pub fn check_tag(args: String) -> TagEnum {
+    match args.as_str() {
+        "-t" => TagEnum::Feature,
+        "-b" => TagEnum::Bug,
+        "-e" => TagEnum::Enhancement,
+        "-q" => TagEnum::Question,
+        _ => TagEnum::Other,
+    }
+}
