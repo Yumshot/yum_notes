@@ -5,7 +5,7 @@ use crossterm::{
 };
 use std::{error::Error, io};
 use tui::{
-    backend::{CrosstermBackend}, Terminal,
+    backend::CrosstermBackend, Terminal,
 };
 
 mod ux_functions;
@@ -19,7 +19,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     // create app and run it
-    let res = ux_functions::run_app(&mut terminal);
+    let app = ux_functions::create_new_app();
+    let res = ux_functions::run_app(&mut terminal, app);
 
     // restore terminal
     disable_raw_mode()?;
@@ -36,4 +37,3 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     Ok(())
 }
-
