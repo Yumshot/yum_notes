@@ -6,9 +6,20 @@ use std::io::Read;
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub struct Note {
     pub name: String,
+    pub tag: TagEnum,
     pub content: String,
     pub status: NoteEnum,
 }
+
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+pub enum TagEnum {
+    Feature,
+    Bug,
+    Enhancement,
+    Question,
+    Other,
+}
+
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum NoteEnum {
@@ -106,6 +117,23 @@ pub fn create_note(note_structured: Note) {
         let mut file = std::fs::File::create(&note_file).unwrap();
         let mut note_map = HashMap::new();
         note_map.insert("content", note_structured.content);
+        match note_structured.tag {
+            TagEnum::Feature => {
+                note_map.insert("tag", "Feature".to_owned());
+            },
+            TagEnum::Bug => {
+                note_map.insert("tag", "Bug".to_owned());
+            },
+            TagEnum::Enhancement => {
+                note_map.insert("tag", "Enhancement".to_owned());
+            },
+            TagEnum::Question => {
+                note_map.insert("tag", "Question".to_owned());
+            },
+            TagEnum::Other => {
+                note_map.insert("tag", "Other".to_owned());
+            },
+        }
         match note_structured.status {
             NoteEnum::Todo => {
                 note_map.insert("status", "📦".to_owned());
@@ -120,6 +148,10 @@ pub fn create_note(note_structured: Note) {
                 note_map.insert("status", "🗙".to_owned());
             },            
         }
+
+        
+
+
         // TODO: Write a function to convert the note into a markdown format.
         let json = serde_json::to_string_pretty(&note_map).unwrap();
         file.write_all(json.as_bytes()).unwrap();
