@@ -11,11 +11,10 @@ fn main() {
     if args.len() < 1 {
         println!("Please provide a command");
         std::process::exit(1);
-    } 
-    
+    }
+
     if possibles.contains(&args[1].as_str()) {
         let args_tag = check_tag(args[3].clone());
-       
 
         match args[1].as_str() {
             "-n" => {
@@ -26,31 +25,25 @@ fn main() {
                     status: functions::NoteEnum::Todo,
                 };
                 functions::create_note(note_structured);
-            },
+            }
             "-e" => {
-                functions::edit_note(
-                    args[2].clone(),
-                    args[4].clone(),
-                    functions::NoteEnum::Todo,
-                );
+                functions::edit_note(args[2].clone(), args[4].clone(), functions::NoteEnum::Todo);
             }
             "-d" => {
                 functions::delete_note(args[1].clone());
-            },
+            }
 
             //TODO: Implement the rest of the functions.
             // "-l" => functions::list_notes(),
             // "-s" => functions::search_notes(),
-
             _ => {
                 println!("Please provide a valid command");
                 std::process::exit(1);
-            },
+            }
         }
     } else {
         println!("Please provide a valid command");
     }
-    
 }
 
 fn check_tag(args: String) -> TagEnum {
