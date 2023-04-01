@@ -1,7 +1,5 @@
 use std::env;
 
-use functions::TagEnum;
-
 mod functions;
 // todo!()
 fn main() {
@@ -14,7 +12,7 @@ fn main() {
     }
 
     if possibles.contains(&args[1].as_str()) {
-        let args_tag = check_tag(args[3].clone());
+        let args_tag = functions::check_tag(args[3].clone());
 
         match args[1].as_str() {
             "-n" => {
@@ -43,15 +41,5 @@ fn main() {
         }
     } else {
         println!("Please provide a valid command");
-    }
-}
-
-fn check_tag(args: String) -> TagEnum {
-    match args.as_str() {
-        "-t" => functions::TagEnum::Feature,
-        "-b" => functions::TagEnum::Bug,
-        "-e" => functions::TagEnum::Enhancement,
-        "-q" => functions::TagEnum::Question,
-        _ => functions::TagEnum::Other,
     }
 }
