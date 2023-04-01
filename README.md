@@ -47,7 +47,9 @@ enum NoteEnum {
 ```
 
 ynote -a (Creates a new note) requires: Name (Name of the file) | Content (The Note Itself) | Status (NoteEnum Value)
+
 ynote -e (Edits a note) requires: Name (Name of File)
+
 ynote -d (Deletes a Note) requires: Name (Name of File) 
 
 ** This repo is a work in progress
