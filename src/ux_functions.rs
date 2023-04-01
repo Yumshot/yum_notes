@@ -12,11 +12,15 @@ pub fn run_app<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> {
         terminal.draw(ui)?;
 
         if let Event::Key(key) = event::read()? {
-            if let KeyCode::Char('q') = key.code {
-                return Ok(());
-            }
+            match key.code {
+                KeyCode::Char('q') => return Ok(()),
+                // KeyCode::Up => todo!(),
+                // KeyCode::Down => todo!(),
+                // KeyCode::Enter => println!("Selected item: {}", "TODO"),
+                _ => {}
         }
     }
+}
 }
 
 pub fn ui<B: Backend>(f: &mut Frame<B>) {
@@ -28,7 +32,7 @@ pub fn ui<B: Backend>(f: &mut Frame<B>) {
     // Surrounding block
     let block = Block::default()
         .borders(Borders::ALL)
-        .title("Main block with round corners")
+        .title("🗇 Yum Notes 🗇")
         .title_alignment(Alignment::Center)
         .border_type(BorderType::Rounded);
     f.render_widget(block, size);  
@@ -44,7 +48,7 @@ pub fn ui<B: Backend>(f: &mut Frame<B>) {
     // Create a layout
     let chunks = Layout::default()
         .direction(Direction::Vertical)
-        .margin(1)
+        .margin(3)
         .constraints([Constraint::Percentage(100)].as_ref())
         .split(size);
 
