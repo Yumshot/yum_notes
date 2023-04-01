@@ -3,61 +3,24 @@ use std::io::Write;
 use std::collections::HashMap;
 use std::io::Read;
 
-struct Note {
-    name: String,
-    content: String,
-    status: NoteEnum,
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+pub struct Note {
+    pub name: String,
+    pub content: String,
+    pub status: NoteEnum,
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
-enum NoteEnum {
+pub enum NoteEnum {
     Todo,
     Working,
     Done,
     Deleted,
 }
 
-/// It takes in a command, a note name, a note content, and a note status, and then it matches the
-/// command to a function
-fn main() {
-    let mut args = std::env::args();
-    let command = args.nth(1).unwrap();
-    let note_name = args.nth(0).unwrap();
-    let note_content = args.nth(0).unwrap();
-    let note_status = args.nth(0).unwrap();
-
-    // match command.as_str() {
-    //     "new" => {
-    //         let note_structured = Note {
-    //             name: note_name,
-    //             content: note_content,
-    //             status: NoteEnum::Todo,
-    //         };
-    //         create_note(note_structured);
-    //     },
-    //     "edit" => {
-    //         edit_note(note_name, note_content, NoteEnum::Todo);
-    //     },
-    //     "delete" => {
-    //         delete_note();
-    //     },
-    //     "list" => {
-    //         list_notes();
-    //     },
-    //     "search" => {
-    //         search_notes();
-    //     },
-    //     _ => {
-    //         println!("Command not found");
-    //     }
-    // }
-}
-
 pub fn log(message: String) {
     println!("{}", message);
 }
-
-
 
 /// > This function takes a string as an argument and returns a Result type that contains either a
 /// string or an error.
@@ -133,7 +96,7 @@ fn find_config_directory()  {
 /// Arguments:
 /// 
 /// * `note_structured`: Note
-fn create_note(note_structured: Note) {
+pub fn create_note(note_structured: Note) {
     let mut note_dir = gather_user_home_directory("HOME".to_string()).unwrap(); 
     note_dir = format!("{}{}", note_dir, "/.config/yum_notes/notes/"); 
     let file_name = format!("{}{}", note_structured.name, ".md"); 
@@ -175,7 +138,7 @@ fn create_note(note_structured: Note) {
 /// * `note_name`: The name of the note you want to edit
 /// * `note_content`: String, note_status: NoteEnum
 /// * `note_status`: NoteEnum::Todo,
-fn edit_note(note_name: String, note_content: String, note_status: NoteEnum) {
+pub fn edit_note(note_name: String, note_content: String, note_status: NoteEnum) {
     let mut note_dir = gather_user_home_directory("HOME".to_string()).unwrap(); 
     note_dir = format!("{}{}", note_dir, "/.config/yum_notes/notes/"); 
     let file_name = format!("{}{}", note_name, ".md"); 
@@ -251,7 +214,7 @@ fn edit_note(note_name: String, note_content: String, note_status: NoteEnum) {
 /// Arguments:
 /// 
 /// * `note_name`: The name of the note to delete.
-fn delete_note(note_name: String) {
+pub fn delete_note(note_name: String) {
     let mut note_dir = gather_user_home_directory("HOME".to_string()).unwrap(); // get to working directory
     note_dir = format!("{}{}", note_dir, "/.config/yum_notes/notes/"); // add folder to string
     let file_name = format!("{}{}", note_name, ".md"); // add file name to path
