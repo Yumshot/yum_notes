@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     // create app and run it
-    let app = ux::create_new_app();
+    let app = ux::structs::create_new_app();
     let res = ux::run_app(&mut terminal, app);
 
     // restore terminal
