@@ -86,7 +86,7 @@ fn create_main_window(f: &mut Frame<impl Backend>, app: &structs::App) {
 
     // NOTE: TABS
     let tabs = Tabs::new(titles)
-        .block(Block::default().borders(Borders::ALL).title("Tabs").border_type(BorderType::Rounded))
+        .block(Block::default().borders(Borders::ALL).title(">> Tabs").border_type(BorderType::Rounded))
         .select(app.index)
         .style(Style::default().fg(Color::White))
         .highlight_style(
@@ -113,21 +113,20 @@ fn create_main_window(f: &mut Frame<impl Backend>, app: &structs::App) {
                 .map(|res| res.map(|e| ListItem::new(e.file_name().into_string().unwrap())))
                 .collect::<Result<Vec<ListItem>, io::Error>>()
                 .unwrap();
-            let list = List::new(items)
-                .highlight_style(Style::default().add_modifier(Modifier::BOLD))
-                .highlight_symbol(">> ");
+            let list = List::new(items);
             f.render_widget(list, inner_chunks[0]);
 
-            Block::default().title("Overview").borders(Borders::ALL).border_type(BorderType::Rounded)
+            Block::default().title(" ★ Overview ★ ").borders(Borders::ALL).border_type(BorderType::Rounded)
         },
         1 => {
-            
-         
             Block::default()
         },
-        2 => Block::default().title("Search Note **").borders(Borders::ALL).border_type(BorderType::Rounded),
-        3 => Block::default().title("Delete Note").borders(Borders::ALL).border_type(BorderType::Rounded),
-        4 => Block::default().title("Edit Note").borders(Borders::ALL).border_type(BorderType::Rounded),
+        2 => {
+         
+            Block::default().title(" ★ Search Note ★ ").borders(Borders::ALL).border_type(BorderType::Rounded)
+        },
+        3 => Block::default(),
+        4 => Block::default(),
         _ => unreachable!(),
     };
     f.render_widget(inner, chunks[1]);
