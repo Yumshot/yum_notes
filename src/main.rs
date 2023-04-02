@@ -22,6 +22,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let app = ux::structs::create_new_app();
     let res = ux::run_app(&mut terminal, app);
 
+
     // restore terminal
     disable_raw_mode()?;
     execute!(
