@@ -8,7 +8,7 @@ use tui::{
     backend::CrosstermBackend, Terminal,
 };
 
-mod ux_functions;
+mod ux;
 
 fn main() -> Result<(), Box<dyn Error>> {
     // setup terminal
@@ -19,8 +19,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     // create app and run it
-    let app = ux_functions::create_new_app();
-    let res = ux_functions::run_app(&mut terminal, app);
+    let app = ux::create_new_app();
+    let res = ux::run_app(&mut terminal, app);
 
     // restore terminal
     disable_raw_mode()?;
