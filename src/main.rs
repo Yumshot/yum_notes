@@ -1,40 +1,34 @@
-use crossterm::{
-    event::{DisableMouseCapture, EnableMouseCapture},
-    execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
-};
-use std::{error::Error, io};
-use tui::{
-    backend::CrosstermBackend, Terminal,
-};
+use std::io;
 
-mod ux;
+mod routes;
 
-fn main() -> Result<(), Box<dyn Error>> {
-    // setup terminal
-    enable_raw_mode()?;
-    let mut stdout = io::stdout();
-    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
-    let backend = CrosstermBackend::new(stdout);
-    let mut terminal = Terminal::new(backend)?;
+fn main() {
+    println!("What would you like to do?");
+    let mut user_choice = String::new();
+    io::stdin()
+        .read_line(&mut user_choice)
+        .expect("Failed to read line");
+    let user_choice = user_choice.trim();
 
-    // create app and run it
-    let app = ux::structs::create_new_app();
-    let res = ux::run_app(&mut terminal, app);
-
-
-    // restore terminal
-    disable_raw_mode()?;
-    execute!(
-        terminal.backend_mut(),
-        LeaveAlternateScreen,
-        DisableMouseCapture
-    )?;
-    terminal.show_cursor()?;
-
-    if let Err(err) = res {
-        println!("{:?}", err)
-    }
-
-    Ok(())
+        match user_choice {
+            "n" => {
+                routes::new::create_new_note();
+            }
+            "e" => {
+                routes::edit::edit_note();
+            }
+            "d" => {
+                routes::delete::delete_note();
+            }
+            "l" => {
+                println!("You chose 3");
+            }
+            "q" => {
+                println!("You chose 4");
+            }
+            _ => {
+                println!("[ERROR] Invalid input - use [n]ew, [e]dit, [d]elete, [l]ist or [q]uit");
+            }
+        }
+    
 }
